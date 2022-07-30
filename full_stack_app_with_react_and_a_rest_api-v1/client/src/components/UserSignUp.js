@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 
-class UserSignUp extends Component {
+export default class UserSignUp extends Component {
 
     render() {
         return (
@@ -41,9 +40,3 @@ class UserSignUp extends Component {
         );
     }
 }
-
-UserSignUp.propTypes = {
-
-};
-
-export default UserSignUp;

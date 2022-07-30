@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 
-class CreateCourse extends Component {
+export default class CreateCourse extends Component {
 
     render() {
         return (
@@ -56,9 +55,3 @@ class CreateCourse extends Component {
         );
     }
 }
-
-CreateCourse.propTypes = {
-
-};
-
-export default CreateCourse;

@@ -1,4 +1,5 @@
 import Courses from './components/Courses';
+import Header from './components/Header';
 
 function App() {
   fetch('http://localhost:5000/api/courses')
@@ -6,7 +7,10 @@ function App() {
    .then(data => console.log(data));
 
   return (
-    <Courses />
+    <div>
+      <Header />
+        <Courses />
+      </div>
   );
 }
 

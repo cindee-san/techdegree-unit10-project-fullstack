@@ -30,4 +30,3 @@ export default class Courses extends Component {
   }
 }
 
-Courses.propTypes = {};
