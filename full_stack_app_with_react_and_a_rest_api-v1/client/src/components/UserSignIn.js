@@ -1,7 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
 export default function UserSignIn(){
+
+  const [emailAddress, setEmailAddress] = useState('');
+  const [password, setPassword] = useState('');
 
     return (
         <main>
@@ -14,15 +17,17 @@ export default function UserSignIn(){
                 id="emailAddress"
                 name="emailAddress"
                 type="email"
-                value=""
-              ></input>
+                value={emailAddress}
+                onChange={(e) => setEmailAddress(e.target.value)}
+              />
               <label for="password">Password</label>
               <input
                 id="password"
                 name="password"
                 type="password"
-                value=""
-              ></input>
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
               <button className="button" type="submit">
                 Sign In
               </button>
