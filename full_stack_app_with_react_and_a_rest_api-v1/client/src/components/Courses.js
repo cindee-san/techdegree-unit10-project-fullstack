@@ -1,7 +1,14 @@
 import React, { Component } from "react";
+import { Link } from 'react-router-dom';
 
 export default class Courses extends Component {
+    
   render() {
+      // gets a list of all courses from the database
+    fetch('http://localhost:5000/api/courses')
+    .then(response => response.json())
+    .then(data => console.log(data));
+
     return (
         <main>
         <div className="wrap main--grid">

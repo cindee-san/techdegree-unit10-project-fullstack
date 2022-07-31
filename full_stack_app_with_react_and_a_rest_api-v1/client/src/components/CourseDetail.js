@@ -3,6 +3,10 @@ import React, { Component } from 'react';
 export default class CourseDetail extends Component {
 
     render() {
+        //  gets a course from the database by id
+        fetch('http://localhost:5000/api/courses/:id')
+        .then(response => response.json())
+        .then(data => console.log(data));
         return (
 <body>
     <div id="root">
