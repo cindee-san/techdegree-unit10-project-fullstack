@@ -1,46 +1,67 @@
-import React, { Component } from 'react';
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
-export default class UserSignUp extends Component {
-    state = {
-        firstName: '',
-        lastName: '',
-        emailAddress: '',
-        password: '',
-        errors: [],
-      }
-    
+export default function UserSignUp() {
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [emailAddress, setEmailAddress] = useState("");
+  const [password, setPassword] = useState("");
 
-    render() {
-        const {
-            firstName,
-            lastName,
-            emailAddress,
-            password,
-            errors,
-          } = this.state;
-        return (
-           
-        <main>
-            <div className="form--centered">
-                <h2>Sign Up</h2>
-                
-                <form>
-                    <label for="firstName">First Name</label>
-                    <input id="firstName" name="firstName" type="text" value={firstName} ></input>
-                    <label for="lastName">Last Name</label>
-                    <input id="lastName" name="lastName" type="text" value={lastName}></input>
-                    <label for="emailAddress">Email Address</label>
-                    <input id="emailAddress" name="emailAddress" type="email" value={emailAddress}></input>
-                    <label for="password">Password</label>
-                    <input id="password" name="password" type="password" value={password}></input>
-                    <button className="button" type="submit">Sign Up</button><button className="button button-secondary" onclick="event.preventDefault();"><Link to="/">Cancel</Link></button>
-                </form>
-                <p>Already have a user account? Click here to <Link to="/signin">sign in</Link>!</p>
-            </div>
-        </main>
-        );
-    }
+  return (
+    <main>
+      <div className="form--centered">
+        <h2>Sign Up</h2>
+
+        <form>
+          <label for="firstName">First Name</label>
+          <input
+            id="firstName"
+            name="firstName"
+            type="text"
+            value={firstName}
+            onChange={(e) => setFirstName(e.target.value)}
+          />
+          <label for="lastName">Last Name</label>
+          <input
+            id="lastName"
+            name="lastName"
+            type="text"
+            value={lastName}
+            onChange={(e) => setLastName(e.target.value)}
+          />
+          <label for="emailAddress">Email Address</label>
+          <input
+            id="emailAddress"
+            name="emailAddress"
+            type="email"
+            value={emailAddress}
+            onChange={(e) => setEmailAddress(e.target.value)}
+          />
+          <label for="password">Password</label>
+          <input
+            id="password"
+            name="password"
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <button className="button" type="submit">
+            Sign Up!
+          </button>
+          <button
+            className="button button-secondary"
+            onclick="event.preventDefault();"
+          >
+            <Link to="/">Cancel</Link>
+          </button>
+        </form>
+        <p>
+          Already have a user account? Click here to{" "}
+          <Link to="/signin">sign in</Link>!
+        </p>
+      </div>
+    </main>
+  );
 }
 //somewhere here
 // async createUser(user) {
