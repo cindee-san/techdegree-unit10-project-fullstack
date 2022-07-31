@@ -1,22 +1,11 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-export default class UpdateCourse extends Component {
+// will need context from courses:id
+
+export default function UpdateCourse() {
    
-    render() {
+  
         return (
-            <body>
-    <div id="root">
-        <header>
-            <div className="wrap header--flex">
-                <h1 className="header--logo"><a href="index.html">Courses</a></h1>
-                <nav>
-                    <ul className="header--signedin">
-                        <li>Welcome, Joe Smith!</li>
-                        <li><a href="sign-out.html">Sign Out</a></li>
-                    </ul>
-                </nav>
-            </div>
-        </header>
         <main>
             <div className="wrap">
                 <h2>Update Course</h2>
@@ -43,9 +32,8 @@ export default class UpdateCourse extends Component {
                 </form>
             </div>
         </main>
-    </div>
-</body>
+
 
         );
-    }
+    
 }
