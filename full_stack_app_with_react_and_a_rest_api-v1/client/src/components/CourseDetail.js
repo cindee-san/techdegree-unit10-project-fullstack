@@ -2,16 +2,17 @@ import React, { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 
 export default function CourseDetail() {
-  const [course, setCourse] = useState('');
+  const [course, setCourse] = useState({});
   const { id } = useParams();
+  console.log(course.user);
 
   useEffect(() => {
     //  gets a course from the database by id
     fetch(`http://localhost:5000/api/courses/${id}`)
       .then((response) => response.json())
-      .then((data) => console.log(data))
+      .then(json => setCourse(json))
       .catch((err) => console.log("Oh noes!", err));
-  }, []);
+  }, [id]);
 
   return (
         <main>
@@ -36,10 +37,11 @@ export default function CourseDetail() {
                 <div>
                   <h3 className="course--detail--title">Course</h3>
                   <h4 className="course--name">{course.title}</h4>
-                  <p>
-                    {course.firstName} {course.lastName}
+                 { course.user && (
+                     <p>
+                    By: {course.user.firstName} {course.user.lastName}
                   </p>
-
+                  )}
                   <p>{course.description}</p>
                 </div>
                 <div>
