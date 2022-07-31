@@ -18,13 +18,7 @@ const enableGlobalErrorLogging = process.env.ENABLE_GLOBAL_ERROR_LOGGING === 'tr
 const app = express();
 
 // set up CORS
-app.use(cors({
-  origin: '*',
-  methods: [
-    "GET", "POST", "PUT", "DELETE"
-  ],
-  credentials: true
-}));
+app.use(cors());
 
 // setup morgan which gives us http request logging
 app.use(morgan('dev'));

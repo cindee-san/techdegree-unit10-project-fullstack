@@ -10,10 +10,6 @@ import UserSignOut from './components/UserSignOut';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 function App() {
-  fetch('http://localhost:5000/api/courses')
-   .then(response => response.json())
-   .then(data => console.log(data));
-
   return (
     <BrowserRouter>
       <Header />
