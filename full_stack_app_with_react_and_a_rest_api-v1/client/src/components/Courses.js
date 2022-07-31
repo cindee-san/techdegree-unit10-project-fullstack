@@ -7,7 +7,6 @@ export default class Courses extends Component {
         super();
         this.state = {
             courses: [],
-
         }
     };
 
