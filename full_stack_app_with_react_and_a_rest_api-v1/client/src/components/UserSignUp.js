@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
+import withContext from "../Context";
 
 
 export default function UserSignUp() {
@@ -9,6 +10,7 @@ export default function UserSignUp() {
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const context = useContext(withContext);
 
 //handles submit of form
   const handleSubmit = (e) => {
@@ -24,8 +26,6 @@ export default function UserSignUp() {
 
     setIsLoading(true);
 
-    const { context } = this.props;
-    
 //makes post request
  fetch("http://localhost:5000/api/users", {
       method: "POST",
