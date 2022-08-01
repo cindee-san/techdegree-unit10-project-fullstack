@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
 export default function CreateCourse() {
@@ -6,24 +6,53 @@ export default function CreateCourse() {
   const [description, setDescription] = useState("");
   const [estimatedTime, setEstimatedTime] = useState("");
   const [materialsNeeded, setMaterialsNeeded] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+ 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const createCourse = {
+     title,
+     description,
+     estimatedTime,
+     materialsNeeded,
+    };
 
-  useEffect(() => {});
+    setIsLoading(true);
+
+ fetch("http://localhost:5000/api/courses", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(createCourse),
+    })
+    .then( response => {
+      if (response.ok) {
+        console.log("new course added");
+        console.log(createCourse);
+        setIsLoading(false);
+      } else if (!response.ok){
+        console.log(response.statusText);
+        console.log ((response.body)); 
+      } else {
+        throw new Error(response.status);
+      }
+    })
+   }
 
   return (
     <main>
       <div className="wrap">
         <h2>Create Course</h2>
-        <div className="validation--errors">
-          <h3>Validation Errors</h3>
-          <ul>
-            <li>Please provide a value for "Title"</li>
-            <li>Please provide a value for "Description"</li>
-          </ul>
-        </div>
-        <form>
+      {/* <div className="validation--errors">
+        <h3>Validation Errors</h3>
+        <ul>
+          <li>Please provide a value for "Title"</li>
+          <li>Please provide a value for "Description"</li>
+        </ul>
+      </div> */}
+        <form onSubmit={handleSubmit}>
           <div className="main--flex">
             <div>
-              <label for="courseTitle">Course Title</label>
+              <label htmlFor="courseTitle">Course Title</label>
               <input
                 id="courseTitle"
                 name="courseTitle"
@@ -34,7 +63,7 @@ export default function CreateCourse() {
 
               <p>By Joe Smith</p>
 
-              <label for="courseDescription">Course Description</label>
+              <label htmlFor="courseDescription">Course Description</label>
               <textarea
                 id="courseDescription"
                 name="courseDescription"
@@ -43,7 +72,7 @@ export default function CreateCourse() {
               ></textarea>
             </div>
             <div>
-              <label for="estimatedTime">Estimated Time</label>
+              <label htmlFor="estimatedTime">Estimated Time</label>
               <input
                 id="estimatedTime"
                 name="estimatedTime"
@@ -53,16 +82,18 @@ export default function CreateCourse() {
               />
         
 
-              <label for="materialsNeeded">Materials Needed</label>
+              <label htmlFor="materialsNeeded">Materials Needed</label>
               <textarea id="materialsNeeded" name="materialsNeeded" value={materialsNeeded} onChange={(e) => setMaterialsNeeded(e.target.value)}></textarea>
             </div>
           </div>
-          <button className="button" type="submit">
+          {!isLoading && (<button className="button" type="submit">
             Create Course
-          </button>
+          </button>)}
+          {isLoading && (<button className="button" type="submit">
+            Creating Course...
+          </button>)}
           <button
             className="button button-secondary"
-            onclick="event.preventDefault();"
           >
             <Link to="/">Cancel</Link>
           </button>

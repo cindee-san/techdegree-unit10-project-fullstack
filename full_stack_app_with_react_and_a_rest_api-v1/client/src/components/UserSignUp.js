@@ -1,15 +1,20 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
+
 export default function UserSignUp() {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [emailAddress, setEmailAddress] = useState("");
   const [password, setPassword] = useState("");
+  const [errors, setErrors] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
+//handles submit of form
   const handleSubmit = (e) => {
+
     e.preventDefault();
+    //creates new user
     const newUser = {
       firstName,
       lastName,
@@ -19,24 +24,40 @@ export default function UserSignUp() {
 
     setIsLoading(true);
 
+    const { context } = this.props;
+    
+//makes post request
  fetch("http://localhost:5000/api/users", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(newUser),
     })
+    // checks the response
     .then( response => {
+      //if the response is ok, log 'new user added', log the user object, turn off loading button text
       if (response.ok) {
         console.log("new user added");
         console.log(newUser);
         setIsLoading(false);
+        // if response is not ok, log the staus text to the console and set the errors to the errors object
       } else if (!response.ok){
         console.log(response.statusText);
-        console.log ((response.body)); 
+        setErrors({ errors }); 
+        //if something else, send a new error
       } else {
         throw new Error(response.status);
       }
-    })
+    })// sign in the user
+    .then(context.signIn(emailAddress, password))
+    // push to history stack
+    .then(e.history.push('/'))
+    //catch other errors
+    .catch((err => {
+      console.log(err);
+      this.props.history.push('/error');
+    }))
    }
+
     return (
       <main>
         <div className="form--centered">
@@ -97,22 +118,3 @@ export default function UserSignUp() {
       </main>
     );
   };
-
-//somewhere here
-// async createUser(user) {
-//     // makes a POST request to the /users endpoint
-//     const response = await this.api('/users', 'POST', user);
-//      // if the response status is 200,
-//     // returns an empty array
-//     if (response.status === 201) {
-//       return [];
-//     }
-//     else if (response.status === 400) {
-//       return response.json().then(data => {
-//         return data.errors;
-//       });
-//     }
-//     else {
-//       throw new Error();
-//     }
-//   }
