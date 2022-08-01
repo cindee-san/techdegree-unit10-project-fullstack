@@ -7,13 +7,31 @@ export default function UserSignUp() {
   const [emailAddress, setEmailAddress] = useState("");
   const [password, setPassword] = useState("");
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const newUser = {
+      firstName,
+      lastName,
+      emailAddress,
+      password
+    };
+    fetch('http://localhost:5000/api/users', {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(newUser)
+    }).then(() => {
+      console.log('new user added');
+    })
+    console.log(newUser);
+  }
+
   return (
     <main>
       <div className="form--centered">
         <h2>Sign Up</h2>
 
-        <form>
-          <label for="firstName">First Name</label>
+        <form onSubmit={handleSubmit}>
+          <label htmlFor="firstName">First Name</label>
           <input
             id="firstName"
             name="firstName"
@@ -21,7 +39,7 @@ export default function UserSignUp() {
             value={firstName}
             onChange={(e) => setFirstName(e.target.value)}
           />
-          <label for="lastName">Last Name</label>
+          <label htmlFor="lastName">Last Name</label>
           <input
             id="lastName"
             name="lastName"
@@ -29,7 +47,7 @@ export default function UserSignUp() {
             value={lastName}
             onChange={(e) => setLastName(e.target.value)}
           />
-          <label for="emailAddress">Email Address</label>
+          <label htmlFor="emailAddress">Email Address</label>
           <input
             id="emailAddress"
             name="emailAddress"
@@ -37,7 +55,7 @@ export default function UserSignUp() {
             value={emailAddress}
             onChange={(e) => setEmailAddress(e.target.value)}
           />
-          <label for="password">Password</label>
+          <label htmlFor="password">Password</label>
           <input
             id="password"
             name="password"
@@ -50,7 +68,6 @@ export default function UserSignUp() {
           </button>
           <button
             className="button button-secondary"
-            onclick="event.preventDefault();"
           >
             <Link to="/">Cancel</Link>
           </button>
