@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import Cookies from "js-cookie";
 import Data from "./Data";
 
-const Context = React.createContext();
+export const Context = React.createContext();
 export class Provider extends Component {
   constructor() {
     super();
@@ -92,12 +92,11 @@ export class Provider extends Component {
 
 export const Consumer = Context.Consumer;
 
-export default function withContext(Component) {
-    return function ContextComponent(props) {
-      return (
-        <Context.Consumer>
-          {context => <Component {...props} context={context} />}
-        </Context.Consumer>
-      );
-    }
-  }
+// export default function ContextComponent(props) {
+//       return (
+//         <Context.Consumer>
+//           {context => <Component {...props} context={context} />}
+//         </Context.Consumer>
+//       );
+//     }
+ 

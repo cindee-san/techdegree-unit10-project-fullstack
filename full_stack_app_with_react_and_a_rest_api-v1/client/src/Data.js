@@ -1,10 +1,11 @@
 
 
 export default class Data {
+  //  requiresAuth = false, credentials = null add back in when ready for authentication
   
-    api(path, method = 'GET', body = null, requiresAuth = false, credentials = null) {
+    api(path, method = 'GET', body = null) {
   
-      const url = "localhost:5000/api" + path;
+      const url = "http://localhost:5000/api" + path;
     
       const options = {
         method,
@@ -17,20 +18,20 @@ export default class Data {
         options.body = JSON.stringify(body);
       }
  
-      if (requiresAuth) { 
+      // if (requiresAuth) { 
         
-        const encodedCredentials = btoa(`${credentials.username}:${credentials.password}`);
+      //   const encodedCredentials = btoa(`${credentials.emailAddress}:${credentials.password}`);
         
-        options.headers['Authorization'] = `Basic ${encodedCredentials}`;
-      }
+      //   options.headers['Authorization'] = `Basic ${encodedCredentials}`;
+      // }
       
       return fetch(url, options);
     }
   
     
-    async getUser(username, password) {
+    async getUser(emailAddress, password) {
       
-      const response = await this.api(`/users`, 'GET', null, true, { username, password });
+      const response = await this.api(`/users`, 'GET', null); // true, { emailAddress, password }
       
       if (response.status === 200) {
         return response.json().then(data => data);

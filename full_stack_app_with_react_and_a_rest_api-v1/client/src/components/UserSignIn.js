@@ -7,6 +7,7 @@ export default function UserSignIn(){
   const [password, setPassword] = useState('');
 
     return (
+  
         <main>
           <div className="form--centered">
             <h2>Sign In</h2>
@@ -33,7 +34,6 @@ export default function UserSignIn(){
               </button>
               <button
                 className="button button-secondary"
-                onclick="event.preventDefault();"
               >
                <Link to="/">Cancel</Link> 
               </button>

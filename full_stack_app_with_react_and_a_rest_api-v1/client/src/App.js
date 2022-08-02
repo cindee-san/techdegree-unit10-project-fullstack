@@ -9,9 +9,6 @@ import UserSignIn from './components/UserSignIn';
 import UserSignUp from './components/UserSignUp';
 import UserSignOut from './components/UserSignOut';
 
-import withContext from './Context';
-const UserSignUpWithContext = withContext(UserSignUp);
-
 
 
 function App() {
@@ -24,7 +21,7 @@ function App() {
           <Route path='/courses/:id/update' element={<UpdateCourse />} />
           <Route path='/courses/:id' element={<CourseDetail />} />
           <Route path='/signin' element={<UserSignIn />} />
-          <Route path='/signup' element={<UserSignUpWithContext />} />
+          <Route path='/signup' element={<UserSignUp />} />
           <Route path='/signout' element={<UserSignOut />} />
       </Routes>
     </BrowserRouter>

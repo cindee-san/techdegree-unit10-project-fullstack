@@ -4,7 +4,7 @@ import { Link, useParams } from "react-router-dom";
 export default function CourseDetail() {
   const [course, setCourse] = useState({});
   const { id } = useParams();
-  console.log(course.user);
+  console.log(course);
 
   useEffect(() => {
     //  gets a course from the database by id
