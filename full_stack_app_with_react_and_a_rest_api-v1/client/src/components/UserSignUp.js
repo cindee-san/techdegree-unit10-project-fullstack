@@ -39,6 +39,8 @@ export default function UserSignUp() {
         console.log("new user added");
         console.log(newUser);
         setIsLoading(false);
+        context.actions.signIn(emailAddress, password)
+        .then(() => {e.history.push('/')})
         // if response is not ok, log the staus text to the console and set the errors to the errors object
       } else if (!response.ok){
         console.log(response.statusText);
@@ -48,9 +50,9 @@ export default function UserSignUp() {
         throw new Error(response.status);
       }
     })// sign in the user
-    .then(context.signIn(emailAddress, password))
-    // push to history stack
-    .then(e.history.push('/'))
+    // .then(context.actions.signIn(emailAddress, password))
+    // // push to history stack
+    // .then(() => {e.history.push('/')})
     //catch other errors
     .catch((err => {
       console.log(err);
