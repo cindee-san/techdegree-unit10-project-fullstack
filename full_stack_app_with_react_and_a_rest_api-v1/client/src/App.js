@@ -24,7 +24,7 @@ function App() {
           <Route path='/courses/:id/update' element={<UpdateCourse />} />
           <Route path='/courses/:id' element={<CourseDetail />} />
           <Route path='/signin' element={<UserSignIn />} />
-          <Route path='/signup' element={UserSignUpWithContext()} />
+          <Route path='/signup' element={<UserSignUpWithContext />} />
           <Route path='/signout' element={<UserSignOut />} />
       </Routes>
     </BrowserRouter>

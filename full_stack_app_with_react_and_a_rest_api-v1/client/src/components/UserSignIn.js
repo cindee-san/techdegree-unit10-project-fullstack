@@ -12,7 +12,7 @@ export default function UserSignIn(){
             <h2>Sign In</h2>
   
             <form>
-              <label for="emailAddress">Email Address</label>
+              <label htmlFor="emailAddress">Email Address</label>
               <input
                 id="emailAddress"
                 name="emailAddress"
@@ -20,7 +20,7 @@ export default function UserSignIn(){
                 value={emailAddress}
                 onChange={(e) => setEmailAddress(e.target.value)}
               />
-              <label for="password">Password</label>
+              <label htmlFor="password">Password</label>
               <input
                 id="password"
                 name="password"

@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import withContext from "../Context";
 
 
@@ -11,6 +11,7 @@ export default function UserSignUp() {
   const [errors, setErrors] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const context = useContext(withContext);
+  const navigate = useNavigate()
 
 //handles submit of form
   const handleSubmit = (e) => {
@@ -40,8 +41,8 @@ export default function UserSignUp() {
         console.log(newUser);
         setIsLoading(false);
         context.actions.signIn(emailAddress, password)
-        .then(() => {e.history.push('/')})
-        // if response is not ok, log the staus text to the console and set the errors to the errors object
+        .then(() => {navigate('/')})
+        // if response is not ok, log the status text to the console and set the errors to the errors object
       } else if (!response.ok){
         console.log(response.statusText);
         setErrors({ errors }); 
@@ -56,7 +57,7 @@ export default function UserSignUp() {
     //catch other errors
     .catch((err => {
       console.log(err);
-      this.props.history.push('/error');
+      navigate('/error');
     }))
    }
 
