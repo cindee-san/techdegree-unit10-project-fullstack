@@ -42,6 +42,7 @@ export default function UserSignUp() {
         setIsLoading(false);
         console.log(context)
         context.actions.signIn(emailAddress, password)
+        console.log(context)
         .then(() => {navigate('/')})
         // if response is not ok, log the status text to the console and set the errors to the errors object
       } else if (!response.ok){

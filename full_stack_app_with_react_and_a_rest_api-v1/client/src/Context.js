@@ -43,16 +43,17 @@ export class Provider extends Component {
   }
 
   // asynchronous function that takes a username and password as arguments
-  signIn = async (username, password) => {
+  signIn = async (emailAddress, password) => {
     // uses those credentials to call the getUser() method in Data.js,
     // which makes a GET request to the protected /users route
     // on the server and returns the user data.
-    const user = await this.data.getUser(username, password);
+    const user = await this.data.getUser(emailAddress, password);
     // The returned PromiseValue will be an object holding 
     // the authenticated user's name and username values
     if (user !== null) {
       // update the authenticatedUser state to the value of user
       // the authenticatedUser state will remain null
+      user.password = password
       this.setState(() => {
         return {
           authenticatedUser: user,

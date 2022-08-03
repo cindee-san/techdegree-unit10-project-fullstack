@@ -19,7 +19,7 @@ router.get(
     const user = req.currentUser;
     const userInfo = user.dataValues;
     const userInfoShared = Object.keys(userInfo)
-      .slice(1, 4)
+      .slice(0, 4)
       .reduce((obj, key) => {
         return Object.assign(obj, {
           [key]: user[key],

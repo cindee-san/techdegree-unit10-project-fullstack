@@ -1,18 +1,37 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useContext } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { Consumer, Context } from "../Context";
 
 export default function UserSignIn(){
 
   const [emailAddress, setEmailAddress] = useState('');
   const [password, setPassword] = useState('');
+  const [ errors, setErrors] = useState([])
+  const context = useContext(Context);
+  const navigate = useNavigate()
+
+  const submit = () => {
+  context.actions.signIn(emailAddress, password)
+  .then((user) => {
+    if (user === null) {
+      setErrors({ errors }); 
+    } else {
+      navigate('/')
+      console.log(`SUCCESS! ${emailAddress} is now signed in!`);
+    }
+  })
+
+  }
 
     return (
-  
-        <main>
+      <Consumer>
+        {context => {
+          return (
+            <main>
           <div className="form--centered">
             <h2>Sign In</h2>
   
-            <form>
+            <form onSubmit={submit}>
               <label htmlFor="emailAddress">Email Address</label>
               <input
                 id="emailAddress"
@@ -44,8 +63,13 @@ export default function UserSignIn(){
             </p>
           </div>
         </main>
+          )
+        }}
+      </Consumer>
+        
       );
-    
+
+ 
 }
   
 
