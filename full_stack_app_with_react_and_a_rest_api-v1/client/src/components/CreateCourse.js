@@ -27,10 +27,10 @@ export default function CreateCourse() {
     fetch("http://localhost:5000/api/courses", {
       method: "POST",
       headers: { "Content-Type":"application/json",
-      'Authorization':'Basic' + Buffer.from(`${context.authenticatedUser.emailAddress}:${context.authenticatedUser.password}`).toString("base64")},
+      'Authorization':'Basic ' + Buffer.from(`${context.authenticatedUser.emailAddress}:${context.authenticatedUser.password}`).toString("base64")},
       body: JSON.stringify(createCourse),
     })
-    .then(console.log(context.authenticatedUser.emailAddress))
+    .then(console.log(Buffer.from(`${context.authenticatedUser.emailAddress}:${context.authenticatedUser.password}`).toString("base64")))
     .then((response) => {
       if (response.ok) {
         console.log("new course added");

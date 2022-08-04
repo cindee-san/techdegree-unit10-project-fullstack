@@ -130,6 +130,7 @@ router.post(
   asyncHandler(async (req, res) => {
     const user = req.currentUser;
     let course;
+    console.log(`I am the ${req.body}` )
     try {
       course = await Courses.create(req.body);
       let errors = [];
