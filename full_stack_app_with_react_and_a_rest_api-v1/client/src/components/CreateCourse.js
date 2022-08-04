@@ -8,7 +8,7 @@ export default function CreateCourse() {
   const [description, setDescription] = useState("");
   const [estimatedTime, setEstimatedTime] = useState("");
   const [materialsNeeded, setMaterialsNeeded] = useState("");
-  const [userId, setUserId] = useState("");
+  // const [userId, setUserId] = useState("");
   const [isLoading, setIsLoading] = useState(false); 
   const context = useContext(Context);
   const navigate = useNavigate()
@@ -16,14 +16,11 @@ export default function CreateCourse() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    setUserId(parseInt(context.authenticatedUser.id));
-
     const createCourse = {
       title,
       description,
       estimatedTime,
       materialsNeeded,
-      userId,
     };
 
     setIsLoading(true);
@@ -34,7 +31,7 @@ export default function CreateCourse() {
       method: "POST",
       headers: { "Content-Type":"application/json",
       'Authorization':'Basic ' + Buffer.from(`${context.authenticatedUser.emailAddress}:${context.authenticatedUser.password}`).toString("base64")},
-      body: JSON.stringify(createCourse),
+      body: JSON.stringify({...createCourse, userId: parseInt(context.authenticatedUser.id)}),
     })
     .then(console.log(Buffer.from(`${context.authenticatedUser.emailAddress}:${context.authenticatedUser.password}`).toString("base64")))
     .then((response) => {
