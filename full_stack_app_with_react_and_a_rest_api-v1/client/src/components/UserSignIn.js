@@ -10,12 +10,15 @@ export default function UserSignIn(){
   const context = useContext(Context);
   const navigate = useNavigate()
 
-  const submit = () => {
+  const submit = (e) => {
+    e.preventDefault();
+    console.log(`context:${context}`)
   context.actions.signIn(emailAddress, password)
   .then((user) => {
     if (user === null) {
       setErrors({ errors }); 
     } else {
+      console.log(`user:${user}`)
       navigate('/')
       console.log(`SUCCESS! ${emailAddress} is now signed in!`);
     }

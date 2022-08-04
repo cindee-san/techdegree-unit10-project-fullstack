@@ -43,8 +43,7 @@ export default function UserSignUp() {
         console.log(context)
         context.actions.signIn(emailAddress, password)
         console.log(context)
-        .then(() => {navigate('/')})
-        // if response is not ok, log the status text to the console and set the errors to the errors object
+               // if response is not ok, log the status text to the console and set the errors to the errors object
       } else if (!response.ok){
         console.log(response.statusText);
         setErrors({ errors }); 
@@ -53,6 +52,7 @@ export default function UserSignUp() {
         throw new Error(response.status);
       }
     })
+    .then(() => {navigate('/')})
     .catch((err => {
       console.log(err);
       navigate('/error');

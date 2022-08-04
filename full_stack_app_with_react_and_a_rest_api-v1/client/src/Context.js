@@ -48,6 +48,8 @@ export class Provider extends Component {
     // which makes a GET request to the protected /users route
     // on the server and returns the user data.
     const user = await this.data.getUser(emailAddress, password);
+    console.log(user)
+    console.log('Sign In Works!')
     // The returned PromiseValue will be an object holding 
     // the authenticated user's name and username values
     if (user !== null) {
