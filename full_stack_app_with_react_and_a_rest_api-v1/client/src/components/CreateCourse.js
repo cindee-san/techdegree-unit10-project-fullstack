@@ -8,20 +8,26 @@ export default function CreateCourse() {
   const [description, setDescription] = useState("");
   const [estimatedTime, setEstimatedTime] = useState("");
   const [materialsNeeded, setMaterialsNeeded] = useState("");
+  const [userId, setUserId] = useState("");
   const [isLoading, setIsLoading] = useState(false); 
   const context = useContext(Context);
   const navigate = useNavigate()
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    setUserId(parseInt(context.authenticatedUser.id));
+
     const createCourse = {
       title,
       description,
       estimatedTime,
       materialsNeeded,
+      userId,
     };
 
     setIsLoading(true);
+    
 
 
     fetch("http://localhost:5000/api/courses", {
