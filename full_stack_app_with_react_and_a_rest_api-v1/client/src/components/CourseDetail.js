@@ -4,6 +4,7 @@ import { Link, useParams } from "react-router-dom";
 export default function CourseDetail() {
   const [course, setCourse] = useState({});
   const { id } = useParams();
+
   console.log(course);
 
   useEffect(() => {
@@ -37,9 +38,9 @@ export default function CourseDetail() {
                 <div>
                   <h3 className="course--detail--title">Course</h3>
                   <h4 className="course--name">{course.title}</h4>
-                 { course.user && (
+                 { course.User && (
                      <p>
-                    By: {course.user.firstName} {course.user.lastName}
+                    By: {course['User']['firstName']} { course['User']['lastName'] }
                   </p>
                   )}
                   <p>{course.description}</p>

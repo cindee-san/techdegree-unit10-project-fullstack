@@ -7,8 +7,7 @@ export default function CreateCourse() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [estimatedTime, setEstimatedTime] = useState("");
-  const [materialsNeeded, setMaterialsNeeded] = useState("");
-  // const [userId, setUserId] = useState("");
+  const [materialsNeeded, setMaterialsNeeded] = useState("")
   const [isLoading, setIsLoading] = useState(false); 
   const context = useContext(Context);
   const navigate = useNavigate()

@@ -1,78 +1,109 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState,useContext, useEffect } from "react";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { Context } from "../Context";
+import { Buffer } from "buffer";
 
 // will need context from courses:id
 
 export default function UpdateCourse() {
+  const { id } = useParams();
+  // const [title, setTitle] = useState("prevState");
+  // const [description, setDescription] = useState("");
+  // const [estimatedTime, setEstimatedTime] = useState("");
+  // const [materialsNeeded, setMaterialsNeeded] = useState("")
+
+  const [course, setCourse] = useState('');
+  const url = `http://localhost:5000/api/courses/${id}`
+
+  // const [isLoading, setIsLoading] = useState(false); 
+  const context = useContext(Context);
+  const navigate = useNavigate()
+
+
+  useEffect(() => {
+    const getCourse = async() => {
+      const response = await fetch(url);
+      setCourse(response.data);
+    };
+    getCourse();
+  })
+
+  const onChange = (e) =>{
+    e.persist();
+    setCourse({...course,[e.target.title]: e.target.value})
+  }
+
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    const updateCourse = {
+      title: course.title,
+      description: course.description,
+      estimatedTime: course.estimatedTime,
+      materialsNeeded: course.materialsNeeded,
+    };
+
+    // setIsLoading(true);
+    
+
+
+    fetch(url, {
+      method: "PUT",
+      headers: { "Content-Type":"application/json",
+      'Authorization':'Basic ' + Buffer.from(`${context.authenticatedUser.emailAddress}:${context.authenticatedUser.password}`).toString("base64")},
+      body: JSON.stringify({...updateCourse, userId: parseInt(context.authenticatedUser.id)}),
+    })
+    .then((response) => {
+      if (response.ok) {
+        console.log("course updated");
+        console.log(updateCourse);
+        // setIsLoading(false);
+      } else if (!response.ok) {
+        console.log(response.statusText);
+        console.log(response.body);
+      } else {
+        throw new Error(response.status);
+      }
+    })
+    .then((navigate('/courses/:id')));
+  };
   return (
     <main>
       <div className="wrap">
         <h2>Update Course</h2>
-        <form>
+        <form onSubmit={handleSubmit}>
           <div className="main--flex">
             <div>
-              <label for="courseTitle">Course Title</label>
+              <label htmlFor="courseTitle">Course Title</label>
               <input
                 id="courseTitle"
                 name="courseTitle"
                 type="text"
-                value="Build a Basic Bookcase"
+                value={course.title}
+                onChange={onChange}
               ></input>
 
               <p>By Joe Smith</p>
 
-              <label for="courseDescription">Course Description</label>
-              <textarea id="courseDescription" name="courseDescription">
-                High-end furniture projects are great to dream about. But unless
-                you have a well-equipped shop and some serious woodworking
-                experience to draw on, it can be difficult to turn the dream
-                into a reality.&#13;&#13;Not every piece of furniture needs to
-                be a museum showpiece, though. Often a simple design does the
-                job just as well and the experience gained in completing it goes
-                a long way toward making the next project even
-                better.&#13;&#13;Our pine bookcase, for example, features simple
-                construction and it's designed to be built with basic
-                woodworking tools. Yet, the finished project is a worthy and
-                useful addition to any room of the house. While it's meant to
-                rest on the floor, you can convert the bookcase to a
-                wall-mounted storage unit by leaving off the baseboard. You can
-                secure the cabinet to the wall by screwing through the cabinet
-                cleats into the wall studs.&#13;&#13;We made the case out of
-                materials available at most building-supply dealers and
-                lumberyards, including 1/2 x 3/4-in. parting strip, 1 x 2, 1 x 4
-                and 1 x 10 common pine and 1/4-in.-thick lauan plywood. Assembly
-                is quick and easy with glue and nails, and when you're done with
-                construction you have the option of a painted or clear
-                finish.&#13;&#13;As for basic tools, you'll need a portable
-                circular saw, hammer, block plane, combination square, tape
-                measure, metal rule, two clamps, nail set and putty knife. Other
-                supplies include glue, nails, sandpaper, wood filler and varnish
-                or paint and shellac.&#13;&#13;The specifications that follow
-                will produce a bookcase with overall dimensions of 10 3/4 in.
-                deep x 34 in. wide x 48 in. tall. While the depth of the case is
-                directly tied to the 1 x 10 stock, you can vary the height,
-                width and shelf spacing to suit your needs. Keep in mind,
-                though, that extending the width of the cabinet may require the
-                addition of central shelf supports.
+              <label htmlFor="courseDescription">Course Description</label>
+              <textarea id="courseDescription" name="courseDescription" value={course.description} onChange={onChange}>
+               
               </textarea>
             </div>
             <div>
-              <label for="estimatedTime">Estimated Time</label>
+              <label htmlFor="estimatedTime">Estimated Time</label>
               <input
                 id="estimatedTime"
                 name="estimatedTime"
                 type="text"
-                value="14 hours"
+                value={course.estimatedTime}
+                onChange={onChange}
               ></input>
 
-              <label for="materialsNeeded">Materials Needed</label>
-              <textarea id="materialsNeeded" name="materialsNeeded">
-                * 1/2 x 3/4 inch parting strip&#13;&#13;* 1 x 2 common
-                pine&#13;&#13;* 1 x 4 common pine&#13;&#13;* 1 x 10 common
-                pine&#13;&#13;* 1/4 inch thick lauan plywood&#13;&#13;*
-                Finishing Nails&#13;&#13;* Sandpaper&#13;&#13;* Wood
-                Glue&#13;&#13;* Wood Filler&#13;&#13;* Minwax Oil Based
-                Polyurethane
+              <label htmlFor="materialsNeeded">Materials Needed</label>
+              <textarea id="materialsNeeded" name="materialsNeeded" value={course.materialsNeeded} onChange={onChange}>
+                
               </textarea>
             </div>
           </div>
@@ -81,7 +112,6 @@ export default function UpdateCourse() {
           </button>
           <button
             className="button button-secondary"
-            onclick="event.preventDefault();"
           >
            <Link to="/">Cancel</Link> 
           </button>
