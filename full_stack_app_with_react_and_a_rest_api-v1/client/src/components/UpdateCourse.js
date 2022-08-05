@@ -7,12 +7,12 @@ import { Buffer } from "buffer";
 
 export default function UpdateCourse() {
   const { id } = useParams();
-  // const [title, setTitle] = useState("prevState");
-  // const [description, setDescription] = useState("");
-  // const [estimatedTime, setEstimatedTime] = useState("");
-  // const [materialsNeeded, setMaterialsNeeded] = useState("")
-
-  const [course, setCourse] = useState("");
+  const [course, setCourse] = useState({
+    title: "",
+    description: "",
+    estimatedTime: "",
+    materialsNeeded: "",
+  });
   const url = `http://localhost:5000/api/courses/${id}`;
 
   // const [isLoading, setIsLoading] = useState(false);
@@ -20,16 +20,15 @@ export default function UpdateCourse() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const getCourse = async () => {
-      const response = await fetch(url);
-      setCourse(response.data);
-    };
-    getCourse();
-  });
+    //  gets a course from the database by id
+    fetch(`http://localhost:5000/api/courses/${id}`)
+      .then((response) => response.json())
+      .then((json) => setCourse(json))
+      .catch((err) => console.log("Oh noes!", err));
+  }, [id]);
 
   const onChange = (e) => {
-    e.persist();
-    setCourse({ ...course, [e.target.title]: e.target.value });
+    setCourse({ ...course, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = (e) => {
@@ -71,7 +70,7 @@ export default function UpdateCourse() {
           throw new Error(response.status);
         }
       })
-      .then(navigate("/courses/:id"));
+      .then(navigate(`/courses/${id}`));
   };
   return (
     <main>
