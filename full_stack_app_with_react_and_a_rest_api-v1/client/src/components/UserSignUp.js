@@ -4,20 +4,23 @@ import { Context } from "../Context";
 
 
 export default function UserSignUp() {
+  // handles state of form fields, errors and buttons
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [emailAddress, setEmailAddress] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  // uses context from global state
   const context = useContext(Context);
+  // navigates user to a specified path
   const navigate = useNavigate()
 
 //handles submit of form
   const handleSubmit = (e) => {
 
     e.preventDefault();
-    //creates new user
+    //creates new user object
     const newUser = {
       firstName,
       lastName,
@@ -27,7 +30,7 @@ export default function UserSignUp() {
 
     setIsLoading(true);
 
-//makes post request
+//makes post request to API
  fetch("http://localhost:5000/api/users", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -35,15 +38,15 @@ export default function UserSignUp() {
     })
     // checks the response
     .then( response => {
-      //if the response is ok, log 'new user added', log the user object, turn off loading button text
+      //if the response is ok, log 'new user added', log the user object
+      // turn off loading button text and signs in the newly created user
       if (response.ok) {
         console.log("new user added");
         console.log(newUser);
         setIsLoading(false);
-        console.log(context)
         context.actions.signIn(emailAddress, password)
-        console.log(context)
-               // if response is not ok, log the status text to the console and set the errors to the errors object
+      // if response is not ok, log the status text to the console 
+      //and sends the errors to the errors object
       } else if (!response.ok){
         console.log(response.statusText);
         setErrors({ errors }); 
@@ -52,6 +55,7 @@ export default function UserSignUp() {
         throw new Error(response.status);
       }
     })
+    //navigates to home page once user is created
     .then(() => {navigate('/')})
     .catch((err => {
       console.log(err);
@@ -63,7 +67,6 @@ export default function UserSignUp() {
       <main>
         <div className="form--centered">
           <h2>Sign Up</h2>
-
           <form onSubmit={handleSubmit}>
             <label htmlFor="firstName">First Name</label>
             <input

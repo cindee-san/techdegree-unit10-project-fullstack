@@ -4,7 +4,9 @@ import { Context } from "../Context";
 import { Buffer } from "buffer";
 
 export default function UpdateCourse() {
+  // grabs id from current url
   const { id } = useParams();
+  // manages state of course elements
   const [course, setCourse] = useState({
     title: "",
     description: "",
@@ -12,9 +14,11 @@ export default function UpdateCourse() {
     materialsNeeded: "",
   });
   const url = `http://localhost:5000/api/courses/${id}`;
-
+// manages state of loading button
   const [isLoading, setIsLoading] = useState(false);
+  // uses context from global state
   const context = useContext(Context);
+   // navigates user to a specified path
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -25,10 +29,12 @@ export default function UpdateCourse() {
       .catch((err) => console.log("Oh noes!", err));
   }, [id]);
 
+  // should manage the state of the course input fields as user types
   const onChange = (e) => {
     setCourse({ ...course, [e.target.name]: e.target.value });
   };
 
+  // should submit the form, updating the course elements
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -41,6 +47,7 @@ export default function UpdateCourse() {
 
     setIsLoading(true);
 
+    // fetch request to update the course, with authorization
     fetch(url, {
       method: "PUT",
       headers: {
@@ -56,11 +63,12 @@ export default function UpdateCourse() {
         userId: parseInt(context.authenticatedUser.id),
       }),
     })
+    // checks if the response went through to the API
       .then((response) => {
         if (response.ok) {
           console.log("course updated");
           console.log(updateCourse);
-          // setIsLoading(false);
+          setIsLoading(false);
         } else if (!response.ok) {
           console.log(response.statusText);
           console.log(response.body);
@@ -68,8 +76,10 @@ export default function UpdateCourse() {
           throw new Error(response.status);
         }
       })
+      //navigates user back to page to see edits
       .then(navigate(`/courses/${id}`));
   };
+  
   return (
     <main>
       <div className="wrap">

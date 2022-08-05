@@ -1,4 +1,5 @@
 
+// creates a custom API fetch request
 export default class Data {
   
     api(path, method = 'GET', body = null, requiresAuth = false, credentials = null) {
@@ -26,7 +27,7 @@ export default class Data {
       return fetch(url, options);
     }
   
-    
+    // gets a user
     async getUser(emailAddress, password) {
       
       const response = await this.api(`/users`, 'GET', null, true, { emailAddress, password }); 
@@ -41,24 +42,6 @@ export default class Data {
         throw new Error();
       }
     }
-
-    // async createCourse(course, emailAddress, password) {
-    //   // makes a POST request to the /courses endpoint
-    //   const response = await this.api('/courses', 'POST', { course } ,true, { emailAddress, password });
-    //    // if the response status is 201,
-    //   // returns an empty array
-    //   if (response.status === 201) {
-    //     return [];
-    //   }
-    //   else if (response.status === 400) {
-    //     return response.json().then(data => {
-    //       return data.errors;
-    //     });
-    //   }
-    //   else {
-    //     throw new Error();
-    //   }
-    // }
 
   }
   

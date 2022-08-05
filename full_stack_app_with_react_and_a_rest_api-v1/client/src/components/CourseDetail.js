@@ -19,6 +19,9 @@ export default function CourseDetail() {
       .catch((err) => console.log("Oh noes!", err));
   }, [id]);
 
+    // takes a course id as an argument, sends a DELETE request to API
+    // logs 'course deleted' to console
+    // navigates to home page
   function deleteCourse(id) {
     fetch(`http://localhost:5000/api/courses/${id}`, {
       method: "DELETE",
@@ -32,7 +35,6 @@ export default function CourseDetail() {
     };
 
   
-
   return (
     <main>
       <div className="actions--bar">
