@@ -73,8 +73,8 @@ export default function CreateCourse() {
                       value={title}
                       onChange={(e) => setTitle(e.target.value)}
                     />
-
-                    <p>By Joe Smith</p>
+                
+                    {/* {<p>By Joe Smith</p>} */}
 
                     <label htmlFor="courseDescription">
                       Course Description

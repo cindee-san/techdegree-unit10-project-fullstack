@@ -3,8 +3,6 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import { Context } from "../Context";
 import { Buffer } from "buffer";
 
-// will need context from courses:id
-
 export default function UpdateCourse() {
   const { id } = useParams();
   const [course, setCourse] = useState({
@@ -15,7 +13,7 @@ export default function UpdateCourse() {
   });
   const url = `http://localhost:5000/api/courses/${id}`;
 
-  // const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const context = useContext(Context);
   const navigate = useNavigate();
 
@@ -41,7 +39,7 @@ export default function UpdateCourse() {
       materialsNeeded: course.materialsNeeded,
     };
 
-    // setIsLoading(true);
+    setIsLoading(true);
 
     fetch(url, {
       method: "PUT",
@@ -119,9 +117,16 @@ export default function UpdateCourse() {
               ></textarea>
             </div>
           </div>
-          <button className="button" type="submit">
-            Update Course
-          </button>
+          {!isLoading && (
+                  <button className="button" type="submit">
+                    Update Course
+                  </button>
+                )}
+                {isLoading && (
+                  <button className="button" type="submit">
+                    Updating Course...
+                  </button>
+                )}
           <button className="button button-secondary">
             <Link to="/">Cancel</Link>
           </button>
