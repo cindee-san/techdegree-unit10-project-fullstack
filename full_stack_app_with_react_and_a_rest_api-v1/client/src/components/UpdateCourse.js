@@ -1,4 +1,4 @@
-import React, { useState,useContext, useEffect } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { Context } from "../Context";
 import { Buffer } from "buffer";
@@ -12,27 +12,25 @@ export default function UpdateCourse() {
   // const [estimatedTime, setEstimatedTime] = useState("");
   // const [materialsNeeded, setMaterialsNeeded] = useState("")
 
-  const [course, setCourse] = useState('');
-  const url = `http://localhost:5000/api/courses/${id}`
+  const [course, setCourse] = useState("");
+  const url = `http://localhost:5000/api/courses/${id}`;
 
-  // const [isLoading, setIsLoading] = useState(false); 
+  // const [isLoading, setIsLoading] = useState(false);
   const context = useContext(Context);
-  const navigate = useNavigate()
-
+  const navigate = useNavigate();
 
   useEffect(() => {
-    const getCourse = async() => {
+    const getCourse = async () => {
       const response = await fetch(url);
       setCourse(response.data);
     };
     getCourse();
-  })
+  });
 
-  const onChange = (e) =>{
+  const onChange = (e) => {
     e.persist();
-    setCourse({...course,[e.target.title]: e.target.value})
-  }
-
+    setCourse({ ...course, [e.target.title]: e.target.value });
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -45,28 +43,35 @@ export default function UpdateCourse() {
     };
 
     // setIsLoading(true);
-    
-
 
     fetch(url, {
       method: "PUT",
-      headers: { "Content-Type":"application/json",
-      'Authorization':'Basic ' + Buffer.from(`${context.authenticatedUser.emailAddress}:${context.authenticatedUser.password}`).toString("base64")},
-      body: JSON.stringify({...updateCourse, userId: parseInt(context.authenticatedUser.id)}),
+      headers: {
+        "Content-Type": "application/json",
+        Authorization:
+          "Basic " +
+          Buffer.from(
+            `${context.authenticatedUser.emailAddress}:${context.authenticatedUser.password}`
+          ).toString("base64"),
+      },
+      body: JSON.stringify({
+        ...updateCourse,
+        userId: parseInt(context.authenticatedUser.id),
+      }),
     })
-    .then((response) => {
-      if (response.ok) {
-        console.log("course updated");
-        console.log(updateCourse);
-        // setIsLoading(false);
-      } else if (!response.ok) {
-        console.log(response.statusText);
-        console.log(response.body);
-      } else {
-        throw new Error(response.status);
-      }
-    })
-    .then((navigate('/courses/:id')));
+      .then((response) => {
+        if (response.ok) {
+          console.log("course updated");
+          console.log(updateCourse);
+          // setIsLoading(false);
+        } else if (!response.ok) {
+          console.log(response.statusText);
+          console.log(response.body);
+        } else {
+          throw new Error(response.status);
+        }
+      })
+      .then(navigate("/courses/:id"));
   };
   return (
     <main>
@@ -83,13 +88,18 @@ export default function UpdateCourse() {
                 value={course.title}
                 onChange={onChange}
               ></input>
-
-              <p>By Joe Smith</p>
-
+              {course.User && (
+                <p>
+                  By: {course["User"]["firstName"]} {course["User"]["lastName"]}
+                </p>
+              )}
               <label htmlFor="courseDescription">Course Description</label>
-              <textarea id="courseDescription" name="courseDescription" value={course.description} onChange={onChange}>
-               
-              </textarea>
+              <textarea
+                id="courseDescription"
+                name="courseDescription"
+                value={course.description}
+                onChange={onChange}
+              ></textarea>
             </div>
             <div>
               <label htmlFor="estimatedTime">Estimated Time</label>
@@ -102,18 +112,19 @@ export default function UpdateCourse() {
               ></input>
 
               <label htmlFor="materialsNeeded">Materials Needed</label>
-              <textarea id="materialsNeeded" name="materialsNeeded" value={course.materialsNeeded} onChange={onChange}>
-                
-              </textarea>
+              <textarea
+                id="materialsNeeded"
+                name="materialsNeeded"
+                value={course.materialsNeeded}
+                onChange={onChange}
+              ></textarea>
             </div>
           </div>
           <button className="button" type="submit">
             Update Course
           </button>
-          <button
-            className="button button-secondary"
-          >
-           <Link to="/">Cancel</Link> 
+          <button className="button button-secondary">
+            <Link to="/">Cancel</Link>
           </button>
         </form>
       </div>
