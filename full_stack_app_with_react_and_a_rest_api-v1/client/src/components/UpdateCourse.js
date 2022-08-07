@@ -7,12 +7,12 @@ export default function UpdateCourse() {
   // grabs id from current url
   const { id } = useParams();
   // manages state of course elements
-  const [course, setCourse] = useState({
-    title: "",
-    description: "",
-    estimatedTime: "",
-    materialsNeeded: "",
-  });
+  const [course, setCourse] = useState([])
+  // const [title, setTitle] = useState("");
+  // const [description, setDescription] = useState("");
+  // const [estimatedTime, setEstimatedTime] = useState("");
+  // const [materialsNeeded, setMaterialsNeeded] = useState("")
+
   const url = `http://localhost:5000/api/courses/${id}`;
 // manages state of loading button
   const [isLoading, setIsLoading] = useState(false);
@@ -24,13 +24,17 @@ export default function UpdateCourse() {
   useEffect(() => {
     //  gets a course from the database by id
     fetch(`http://localhost:5000/api/courses/${id}`)
+    .then(console.log("Use effect 1"))
       .then((response) => response.json())
       .then((json) => setCourse(json))
-      .catch((err) => console.log("Oh noes!", err));
+      .catch((err) => console.log("Oh noes!", err))
+      
   }, [id]);
 
   // should manage the state of the course input fields as user types
+  // needed to change the name of the input field to match the name of the corresspondng input field in the fetch request.
   const onChange = (e) => {
+    console.log('onchange')
     setCourse({ ...course, [e.target.name]: e.target.value });
   };
 
@@ -90,7 +94,7 @@ export default function UpdateCourse() {
               <label htmlFor="courseTitle">Course Title</label>
               <input
                 id="courseTitle"
-                name="courseTitle"
+                name="title"
                 type="text"
                 value={course.title}
                 onChange={onChange}
@@ -103,7 +107,7 @@ export default function UpdateCourse() {
               <label htmlFor="courseDescription">Course Description</label>
               <textarea
                 id="courseDescription"
-                name="courseDescription"
+                name="description"
                 value={course.description}
                 onChange={onChange}
               ></textarea>
