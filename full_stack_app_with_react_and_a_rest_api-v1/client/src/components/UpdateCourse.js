@@ -7,17 +7,16 @@ export default function UpdateCourse() {
   // grabs id from current url
   const { id } = useParams();
   // manages state of course elements
-  const [course, setCourse] = useState([])
-  // const [title, setTitle] = useState("");
-  // const [description, setDescription] = useState("");
-  // const [estimatedTime, setEstimatedTime] = useState("");
-  // const [materialsNeeded, setMaterialsNeeded] = useState("")
+  const [course, setCourse] = useState([]);
 
   const url = `http://localhost:5000/api/courses/${id}`;
+
 // manages state of loading button
   const [isLoading, setIsLoading] = useState(false);
+
   // uses context from global state
   const context = useContext(Context);
+  
    // navigates user to a specified path
   const navigate = useNavigate();
 
