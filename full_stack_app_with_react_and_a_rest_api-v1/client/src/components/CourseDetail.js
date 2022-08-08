@@ -9,7 +9,7 @@ export default function CourseDetail() {
   const context = useContext(Context);
   const navigate = useNavigate();
 
-  console.log(course);
+  // console.log(course);
 
   useEffect(() => {
     //  gets a course from the database by id
@@ -19,9 +19,11 @@ export default function CourseDetail() {
       .catch((err) => console.log("Oh noes!", err));
   }, [id]);
 
-    // takes a course id as an argument, sends a DELETE request to API
-    // logs 'course deleted' to console
-    // navigates to home page
+  console.log(course);
+
+  // takes a course id as an argument, sends a DELETE request to API
+  // logs 'course deleted' to console
+  // navigates to home page
   function deleteCourse(id) {
     fetch(`http://localhost:5000/api/courses/${id}`, {
       method: "DELETE",
@@ -31,23 +33,32 @@ export default function CourseDetail() {
           "Basic " +
           Buffer.from(
             `${context.authenticatedUser.emailAddress}:${context.authenticatedUser.password}`
-          ).toString("base64")}}).then(console.log('course deleted')).then(navigate('/'));
-    };
+          ).toString("base64"),
+      },
+    })
+      .then(console.log("course deleted"))
+      .then(navigate("/"));
+  }
 
-  
   return (
+  
     <main>
       <div className="actions--bar">
         <div className="wrap">
-          <Link className="button" to={`/courses/${course.id}/update`}>
-            Update Course
-          </Link>
-          <a className="button" onClick={() => deleteCourse(id)}>
-            Delete Course
-          </a>
-          <Link className="button button-secondary" to="/">
-            Return to List
-          </Link>
+        {/* //if there is a course user and that course user id matches teh authenticated user id, allow user access to buttons that will update or delete course */}
+          {course.User && context.authenticatedUser.id === course["User"]["id"] && (
+            <React.Fragment>
+              <Link className="button" to={`/courses/${course.id}/update`}>
+                Update Course
+              </Link>
+              <a className="button" onClick={() => deleteCourse(id)}>
+                Delete Course
+              </a>
+            </React.Fragment>
+          )}
+              <Link className="button button-secondary" to="/">
+                Return to List
+              </Link>
         </div>
       </div>
 
