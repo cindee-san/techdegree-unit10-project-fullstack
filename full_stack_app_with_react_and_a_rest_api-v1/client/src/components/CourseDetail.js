@@ -9,7 +9,7 @@ export default function CourseDetail() {
   const context = useContext(Context);
   const navigate = useNavigate();
 
-  // console.log(course);
+  console.log(course);
 
   useEffect(() => {
     //  gets a course from the database by id
@@ -41,12 +41,14 @@ export default function CourseDetail() {
   }
 
   return (
-  
     <main>
-      <div className="actions--bar">
+
+<div className="actions--bar">
         <div className="wrap">
-        {/* //if there is a course user and that course user id matches teh authenticated user id, allow user access to buttons that will update or delete course */}
-          {course.User && context.authenticatedUser.id === course["User"]["id"] && (
+        {/* //if there is a course user and that course user id matches the authenticated user id, allow user access to buttons that will update or delete course */}
+
+
+          {course && context.authenticatedUser && context.authenticatedUser.id === course["User"]["id"] && (
             <React.Fragment>
               <Link className="button" to={`/courses/${course.id}/update`}>
                 Update Course
@@ -61,6 +63,8 @@ export default function CourseDetail() {
               </Link>
         </div>
       </div>
+
+
 
       <div className="wrap">
         <h2>Course Detail</h2>

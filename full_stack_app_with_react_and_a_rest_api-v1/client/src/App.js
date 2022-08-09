@@ -8,6 +8,7 @@ import CourseDetail from './components/CourseDetail';
 import UserSignIn from './components/UserSignIn';
 import UserSignUp from './components/UserSignUp';
 import UserSignOut from './components/UserSignOut';
+import PrivateRoute from './components/PrivateRoute';
 
 
 
@@ -17,8 +18,10 @@ function App() {
       <Header />
       <Routes>
           <Route path='/' element={<Courses />} />
+          <Route element={<PrivateRoute />}>
           <Route path='/courses/create' element={<CreateCourse />} />
           <Route path='/courses/:id/update' element={<UpdateCourse />} />
+          </Route>
           <Route path='/courses/:id' element={<CourseDetail />} />
           <Route path='/signin' element={<UserSignIn />} />
           <Route path='/signup' element={<UserSignUp />} />
