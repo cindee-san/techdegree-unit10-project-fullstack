@@ -8,6 +8,7 @@ export default function UpdateCourse() {
   const { id } = useParams();
   // manages state of course elements
   const [course, setCourse] = useState([]);
+  const [error, setError] = useState("");
 
   const url = `http://localhost:5000/api/courses/${id}`;
 
@@ -72,21 +73,37 @@ export default function UpdateCourse() {
           console.log("course updated");
           console.log(updateCourse);
           setIsLoading(false);
-        } else if (!response.ok) {
+          navigate(`/courses/${id}`);
+        } else {
+          setIsLoading(false);
           console.log(response.statusText);
           console.log(response.body);
-        } else {
           throw new Error(response.status);
         }
       })
-      //navigates user back to page to see edits
-      .then(navigate(`/courses/${id}`));
+      .catch(err => {
+        setError(err)
+      })
+     
   };
   
   return (
     <main>
       <div className="wrap">
         <h2>Update Course</h2>
+        {error && (
+                <div className="validation--errors">
+                  <h3>Validation Errors</h3>
+                  <ul>
+                    {course.title === "" && (
+                      <li>Please provide a value for "Title"</li>
+                    )}
+                    {course.description === "" && (
+                      <li>Please provide a value for "Description"</li>
+                    )}
+                  </ul>
+                </div>
+              )}
         <form onSubmit={handleSubmit}>
           <div className="main--flex">
             <div>

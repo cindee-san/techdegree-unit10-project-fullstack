@@ -38,16 +38,19 @@ export default function UserSignUp() {
     })
     // checks the response
     .then( response => {
-      //if the response is ok, log 'new user added', log the user object
+      // if the response is ok, log 'new user added', log the user object
       // turn off loading button text and signs in the newly created user
+      // navigates the new user to homepage
       if (response.ok) {
         console.log("new user added");
         console.log(newUser);
         setIsLoading(false);
-        context.actions.signIn(emailAddress, password)
+        context.actions.signIn(emailAddress, password);
+        navigate('/')
       // if response is not ok, log the status text to the console 
       //and sends the errors to the errors object
       } else if (!response.ok){
+        setIsLoading(false);
         console.log(response.statusText);
         setErrors({ errors }); 
         //if something else, send a new error
@@ -55,11 +58,8 @@ export default function UserSignUp() {
         throw new Error(response.status);
       }
     })
-    //navigates to home page once user is created
-    .then(() => {navigate('/')})
     .catch((err => {
       console.log(err);
-      navigate('/error');
     }))
    }
 
@@ -67,6 +67,25 @@ export default function UserSignUp() {
       <main>
         <div className="form--centered">
           <h2>Sign Up</h2>
+          {errors && (
+                <div className="validation--errors">
+                  <h3>Validation Errors</h3>
+                  <ul>
+                    { firstName === "" && (
+                      <li>Please provide a value for " First Name"</li>
+                    )}
+                    { lastName === "" && (
+                      <li>Please provide a value for "Last Name"</li>
+                    )}
+                    { emailAddress === "" && (
+                      <li>Please provide a value for "Email Address"</li>
+                    )}
+                    { password === "" && (
+                      <li>Please provide a value for "Password"</li>
+                    )}
+                  </ul>
+                </div>
+              )}
           <form onSubmit={handleSubmit}>
             <label htmlFor="firstName">First Name</label>
             <input

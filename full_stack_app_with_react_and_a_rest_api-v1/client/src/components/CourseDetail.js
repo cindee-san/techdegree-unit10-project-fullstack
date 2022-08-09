@@ -48,7 +48,7 @@ export default function CourseDetail() {
         {/* //if there is a course user and that course user id matches the authenticated user id, allow user access to buttons that will update or delete course */}
 
 
-          {course && context.authenticatedUser && context.authenticatedUser.id === course["User"]["id"] && (
+          {course.User && context.authenticatedUser && context.authenticatedUser.id === course["User"]["id"] && (
             <React.Fragment>
               <Link className="button" to={`/courses/${course.id}/update`}>
                 Update Course
