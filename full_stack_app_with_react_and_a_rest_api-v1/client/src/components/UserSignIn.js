@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Consumer, Context } from "../Context";
+import { Context } from "../Context";
 
 export default function UserSignIn(){
 
@@ -28,9 +28,7 @@ export default function UserSignIn(){
   }
 
     return (
-      // <Consumer>
-      //   {context => {
-          // return (
+   
             <main>
           <div className="form--centered">
             <h2>Sign In</h2>
@@ -68,10 +66,6 @@ export default function UserSignIn(){
           </div>
         </main>
           )
-      //    }}
-      //  </Consumer>
-        
-      //  );
 
  
 }

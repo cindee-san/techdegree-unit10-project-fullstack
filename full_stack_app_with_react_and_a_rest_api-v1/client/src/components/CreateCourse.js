@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Consumer, Context } from "../Context";
+import { Context } from "../Context";
 import { Buffer } from "buffer";
 
 export default function CreateCourse() {
@@ -91,9 +91,6 @@ export default function CreateCourse() {
   };
 
   return (
-    <Consumer>
-      {(context) => {
-        return (
           <main>
             <div className="wrap">
               <h2>Create Course</h2>
@@ -170,7 +167,4 @@ export default function CreateCourse() {
             </div>
           </main>
         );
-      }}
-    </Consumer>
-  );
 }
