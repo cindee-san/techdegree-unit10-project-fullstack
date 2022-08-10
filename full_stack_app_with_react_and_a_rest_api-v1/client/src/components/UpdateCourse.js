@@ -24,7 +24,6 @@ export default function UpdateCourse() {
   useEffect(() => {
     //  gets a course from the database by id
     fetch(`http://localhost:5000/api/courses/${id}`)
-    .then(console.log("Use effect 1"))
       .then((response) => response.json())
       .then((json) => setCourse(json))
       .catch((err) => console.log("Oh noes!", err))

@@ -1,8 +1,7 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Consumer, Context } from "../Context";
 import { Buffer } from "buffer";
-import CourseDetail from "./CourseDetail";
 
 export default function CreateCourse() {
   const [title, setTitle] = useState("");
@@ -11,8 +10,30 @@ export default function CreateCourse() {
   const [materialsNeeded, setMaterialsNeeded] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
+  const [user, setUser] = useState([]);
+
   const context = useContext(Context);
   const navigate = useNavigate();
+
+  // gets current user, to make them the author of the course
+  useEffect(() => {
+    fetch("http://localhost:5000/api/users", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization:
+          "Basic " +
+          Buffer.from(
+            `${context.authenticatedUser.emailAddress}:${context.authenticatedUser.password}`
+          ).toString("base64"),
+      },
+    })
+      .then((response) => response.json())
+      .then((json) => setUser(json))
+      .catch((err) => {
+        setError(err);
+      });
+  });
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -50,7 +71,9 @@ export default function CreateCourse() {
           navigate("/");
         } else {
           setIsLoading(false);
-          throw new Error(`You are missing some information, so the request could not be sent: ${response.statusText}`);
+          throw new Error(
+            `You are missing some information, so the request could not be sent: ${response.statusText}`
+          );
         }
       })
       .catch((err) => {
@@ -91,7 +114,7 @@ export default function CreateCourse() {
                       onChange={(e) => setTitle(e.target.value)}
                     />
 
-                    {/* {<p>By Joe Smith</p>} */}
+                    <p>{`By: ${user.firstName} ${user.lastName}`}</p>
 
                     <label htmlFor="courseDescription">
                       Course Description

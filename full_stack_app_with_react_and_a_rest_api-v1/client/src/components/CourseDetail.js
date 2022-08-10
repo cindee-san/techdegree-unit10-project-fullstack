@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import { Context } from "../Context";
 import { Buffer } from "buffer";
+import ReactMarkdown from "react-markdown";
 
 export default function CourseDetail() {
   const [course, setCourse] = useState({});
@@ -53,9 +54,9 @@ export default function CourseDetail() {
               <Link className="button" to={`/courses/${course.id}/update`}>
                 Update Course
               </Link>
-              <a className="button" onClick={() => deleteCourse(id)}>
+              <button className="button" onClick={() => deleteCourse(id)}>
                 Delete Course
-              </a>
+              </button>
             </React.Fragment>
           )}
               <Link className="button button-secondary" to="/">
@@ -78,15 +79,14 @@ export default function CourseDetail() {
                   By: {course["User"]["firstName"]} {course["User"]["lastName"]}
                 </p>
               )}
-              <p>{course.description}</p>
+             <ReactMarkdown>{course.description}</ReactMarkdown>
             </div>
             <div>
               <h3 className="course--detail--title">Estimated Time</h3>
               <p>{course.estimatedTime}</p>
-
               <h3 className="course--detail--title">Materials Needed</h3>
               <ul className="course--detail--list">
-                <li>{course.materialsNeeded}</li>
+                <ReactMarkdown>{course.materialsNeeded}</ReactMarkdown>
               </ul>
             </div>
           </div>
