@@ -33,7 +33,7 @@ export default function CreateCourse() {
       .catch((err) => {
         setError(err);
       });
-  });
+  },[]);
 
   // takes the submit event
   const handleSubmit = (e) => {

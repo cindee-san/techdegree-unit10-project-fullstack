@@ -3,13 +3,14 @@ import { useContext } from "react";
 import { Outlet } from "react-router";
 import { Context } from "../Context";
 
-function PrivateRoute() {
+function PrivateRoute({ children }) {
   let context = useContext(Context);
   let auth = context.authenticatedUser;
 
 // if there is an authenticated user, direct them to the protected route
   return auth ? (
-    <Outlet />
+    // <Outlet />
+    children
 // otherwise navigate them to the signin page
   ) : (
     <Navigate
