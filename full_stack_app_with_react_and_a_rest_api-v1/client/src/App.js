@@ -18,9 +18,9 @@ function App() {
       <Header />
       <Routes>
           <Route path='/' element={<Courses />} />
-          <Route element={<PrivateRoute />}>
-          <Route path='/courses/create' element={<CreateCourse />} />
-          <Route path='/courses/:id/update' element={<UpdateCourse />} />
+          <Route element={<PrivateRoute />} >
+            <Route path='/courses/create' element={<CreateCourse />} />
+            <Route path='/courses/:id/update' element={<UpdateCourse />} />
           </Route>
           <Route path='/courses/:id' element={<CourseDetail />} />
           <Route path='/signin' element={<UserSignIn />} />
