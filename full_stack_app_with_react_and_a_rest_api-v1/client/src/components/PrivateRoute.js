@@ -7,8 +7,10 @@ function PrivateRoute() {
   let context = useContext(Context);
   let auth = context.authenticatedUser;
 
+// if there is an authenticated user, direct them to the protected route
   return auth ? (
     <Outlet />
+// otherwise navigate them to the signin page
   ) : (
     <Navigate
       to={{

@@ -35,9 +35,11 @@ export default function CreateCourse() {
       });
   });
 
+  // takes the submit event
   const handleSubmit = (e) => {
     e.preventDefault();
 
+    // handles state of course elements
     const createCourse = {
       title,
       description,
@@ -45,8 +47,10 @@ export default function CreateCourse() {
       materialsNeeded,
     };
 
+    // turns on loading button
     setIsLoading(true);
 
+    // fetch request to post the course to the database
     fetch("http://localhost:5000/api/courses", {
       method: "POST",
       headers: {
@@ -62,6 +66,8 @@ export default function CreateCourse() {
         userId: parseInt(context.authenticatedUser.id),
       }),
     })
+    // if the response is ok, creates the course, turns off loading button, 
+    // and navigates user to the home page to see newly created course there
       .then((response) => {
         if (response.ok) {
           console.log("new course added");
@@ -69,6 +75,7 @@ export default function CreateCourse() {
           setIsLoading(false);
           setError(null);
           navigate("/");
+    // if the response is something else, turn off the loading button and throw an error
         } else {
           setIsLoading(false);
           throw new Error(
@@ -76,6 +83,7 @@ export default function CreateCourse() {
           );
         }
       })
+    // catches error, sets the error to the error state and logs to console
       .catch((err) => {
         setError(err);
         console.log(error);

@@ -35,7 +35,7 @@ export class Provider extends Component {
       // mandatory value prop is passed a value object, 
       // containing the authenticatedUser  etc
       // which will be made available to every other component
-      // that needs user to be authenticate first
+      // that needs user to be authenticated first
       <Context.Provider value={value}>
         {this.props.children}
       </Context.Provider>  
@@ -51,7 +51,7 @@ export class Provider extends Component {
     console.log(user)
     console.log('Sign In Works!')
     // The returned PromiseValue will be an object holding 
-    // the authenticated user's name and username values
+    // the authenticated user's name values
     if (user !== null) {
       // update the authenticatedUser state to the value of user
       // the authenticatedUser state will remain null
@@ -61,18 +61,6 @@ export class Provider extends Component {
           authenticatedUser: user,
         };
       });
-      const cookieOptions = {
-        // defines when the cookie will be removed
-        expires: 1 // 1 day
-      };
-      // create a cookie that stores 
-      // the authenticated user data (user and username).
-      // first argument specifies the name of the cookie to set
-      // second argument specifies the value to store in the cookie
-      // store the stringified user object
-      // Pass Cookies.set() an object as the last argument to 
-      // set additional cookie options -- for example, an expiration
-      Cookies.set('authenticatedUser', JSON.stringify(user), cookieOptions);
     }
     return user;
   }
@@ -85,8 +73,6 @@ export class Provider extends Component {
     this.setState({ authenticatedUser: null });
   }
  
-
-  
 }
 
 

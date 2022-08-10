@@ -31,7 +31,6 @@ export default function UpdateCourse() {
   }, [id]);
 
   // should manage the state of the course input fields as user types
-  // needed to change the name of the input field to match the name of the corresspondng input field in the fetch request.
   const onChange = (e) => {
     console.log('onchange')
     setCourse({ ...course, [e.target.name]: e.target.value });

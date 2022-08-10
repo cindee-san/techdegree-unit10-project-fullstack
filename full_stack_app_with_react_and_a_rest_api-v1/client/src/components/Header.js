@@ -17,7 +17,7 @@ const context = useContext(Context);
             <li><Link to="/signup">Sign Up!</Link></li>
             <li><Link to="signin">Sign In!</Link></li>
          </ul>)}
-        {/* //if the user is logged in, display this header to allow them to sign out */}
+        {/* //if the user is logged in, display this header to welcome them and allow them to sign out */}
           { context.authenticatedUser && (<ul className="header--signedin">
             <li>{`Welcome ${context.authenticatedUser.firstName} ${context.authenticatedUser.lastName}!`}</li>
             <li><Link to="/signout">Sign Out!</Link></li>
