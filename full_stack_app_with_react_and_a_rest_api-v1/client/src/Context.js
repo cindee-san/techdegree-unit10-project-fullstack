@@ -83,9 +83,6 @@ export class Provider extends Component {
     // the user is no longer authenticated 
     // and cannot view the private components.
     this.setState({ authenticatedUser: null });
-    // deletes a cookie
-    //takes an argument, the name of the cookie to delete
-    Cookies.remove('authenticatedUser');
   }
  
 

@@ -16,6 +16,7 @@ export default function UserSignIn(){
   context.actions.signIn(emailAddress, password)
   .then((user) => {
     if (user === null) {
+      console.log("no user");
       setErrors({ errors }); 
     } else {
       console.log(`user:${user}`)
@@ -27,14 +28,14 @@ export default function UserSignIn(){
   }
 
     return (
-      <Consumer>
-        {context => {
-          return (
+      // <Consumer>
+      //   {context => {
+          // return (
             <main>
           <div className="form--centered">
             <h2>Sign In</h2>
   
-            <form onSubmit={submit}>
+            <form >
               <label htmlFor="emailAddress">Email Address</label>
               <input
                 id="emailAddress"
@@ -51,10 +52,10 @@ export default function UserSignIn(){
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
-              <button className="button" type="submit">
+              <button className="button" type="submit" onClick={submit}>
                 Sign In
               </button>
-              <button
+              <button 
                 className="button button-secondary"
               >
                <Link to="/">Cancel</Link> 
@@ -67,10 +68,10 @@ export default function UserSignIn(){
           </div>
         </main>
           )
-        }}
-      </Consumer>
+      //    }}
+      //  </Consumer>
         
-      );
+      //  );
 
  
 }
